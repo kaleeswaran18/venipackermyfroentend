@@ -1,0 +1,72 @@
+:root {
+  /* =========================
+     BRAND COLORS
+  ========================= */
+
+  --primary: #c98a1e;
+  --primary-dark: #9a5a0d;
+  --primary-light: #e9a23b;
+
+  /* =========================
+     TEXT
+  ========================= */
+
+  --deep-brown: #6b3a08;
+  --text-primary: #1c1c1c;
+  --text-secondary: #6b7280;
+
+  /* =========================
+     BACKGROUND
+  ========================= */
+
+  --background: #f7f3ea;
+  --surface: #ffffff;
+  --border: #e5ded2;
+
+  /* =========================
+     STATUS
+  ========================= */
+
+  --success: #2e7d32;
+  --error: #c62828;
+  --warning: #ed9f00;
+
+  /* =========================
+     SIDEBAR
+  ========================= */
+
+  --sidebar-bg: #3f5955;
+  --sidebar-text: #ffffff;
+  --sidebar-active: #ffffff;
+
+  /* =========================
+     FONT
+  ========================= */
+
+  --font-family: Inter, "Segoe UI", sans-serif;
+
+  /* =========================
+     RADIUS
+  ========================= */
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  /* =========================
+     SHADOW
+  ========================= */
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+  /* =========================
+     SPACING
+  ========================= */
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+}

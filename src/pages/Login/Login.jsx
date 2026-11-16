@@ -1,5 +1,7 @@
 import { useState } from "react";
-import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
+import api from "../../api/axios";
+
 import "./Login.css";
 
 /* ---------- Brand logo (roof + window + truck) ---------- */
@@ -108,6 +110,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+    const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -216,6 +219,9 @@ const Login = () => {
         "success",
         "Login successful!"
       );
+     
+  navigate("/dashboard");
+
 
     } catch (error) {
       const message =

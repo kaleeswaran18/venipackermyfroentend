@@ -1,0 +1,232 @@
+/* Purchase view page (uses the base styles from purchase.css) */
+
+.pv-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pv-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.pv-grid-3 {
+  grid-template-columns: 1fr 1fr 1.6fr;
+}
+
+.pv-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.pv-item span {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pv-item strong {
+  color: #10213f;
+  font-size: 15px;
+  font-weight: 700;
+  word-break: break-word;
+  text-transform: none;
+}
+
+.pv-gap {
+  margin-top: 16px;
+}
+
+.pv-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pv-badge.paid {
+  background: #c9f1d6;
+  color: #166534;
+}
+
+.pv-badge.partial {
+  background: #fdeaa8;
+  color: #854d0e;
+}
+
+.pv-badge.unpaid {
+  background: #fdd5d5;
+  color: #b91c1c;
+}
+
+.pv-remarks {
+  margin: 0;
+  color: #25334b;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.pv-message {
+  padding: 24px;
+  text-align: center;
+  color: #64748b;
+}
+
+.pv-error {
+  color: #b91c1c;
+}
+
+@media (max-width: 1200px) {
+  .pv-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .pv-grid,
+  .pv-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Purchase Audit History */
+
+.pv-history {
+  margin-top: 18px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 14px;
+}
+
+.pv-history-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #d8e3f2;
+  background: #f3f7fd;
+  color: #1556b8;
+  padding: 12px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.pv-history-toggle svg {
+  width: 18px;
+  transition: transform 0.2s ease;
+}
+
+.pv-history-toggle svg.rotated {
+  transform: rotate(180deg);
+}
+
+.pv-history-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.pv-history-card {
+  border: 1px solid #dce5f0;
+  border-radius: 9px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.pv-history-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 15px;
+  background: #f1f5fb;
+  color: #183b68;
+}
+
+.pv-history-card-head span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.pv-history-card-body {
+  padding: 15px;
+}
+
+.pv-change-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #edf1f6;
+}
+
+.pv-change-row:last-child {
+  border-bottom: none;
+}
+
+.pv-change-row > strong {
+  color: #475569;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.pv-change-values {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.pv-old-value {
+  color: #dc2626;
+  text-decoration: line-through;
+}
+
+.pv-new-value {
+  color: #15803d;
+  font-weight: 600;
+}
+
+.pv-change-arrow {
+  color: #64748b;
+}
+
+.pv-stock-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.pv-stock-comparison > div {
+  min-width: 0;
+}
+
+.pv-stock-comparison h4 {
+  color: #1e40af;
+  margin: 0 0 12px;
+}
+
+.pv-history-title {
+  color: #1556b8;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+  .pv-stock-comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .pv-change-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,174 @@
+/* =========================================================
+   TODAY'S ACTIVITY - DETAILS (what was done today)
+   Only new "ta-" classes. Existing overall-card / activity-tile
+   styles stay in OverallStock.css.
+   ========================================================= */
+
+.ta-details {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid #e6ebf2;
+}
+
+.ta-block-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f2540;
+}
+
+.ta-green svg {
+  color: #16a34a;
+}
+
+.ta-blue svg {
+  color: #2563eb;
+}
+
+.ta-orange svg {
+  color: #ea7a0c;
+}
+
+/* ---------- attendance ---------- */
+
+.ta-attendance {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid #cdebd8;
+  border-radius: 14px;
+  background: #f3fbf6;
+}
+
+.ta-attendance strong {
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 800;
+  color: #16a34a;
+}
+
+.ta-attendance span {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.ta-attendance p {
+  flex-basis: 100%;
+  margin: 4px 0 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 13px;
+}
+
+/* ---------- tables ---------- */
+
+.ta-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e6ebf2;
+  border-radius: 14px;
+}
+
+.ta-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+}
+
+.ta-table thead th {
+  padding: 13px 16px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e6ebf2;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ta-table tbody td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #eef2f6;
+  font-size: 15px;
+  color: #0f2540;
+  vertical-align: middle;
+}
+
+.ta-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ta-table tbody tr:hover {
+  background: #fafcff;
+}
+
+.ta-strong {
+  font-weight: 800;
+}
+
+.ta-pill {
+  display: inline-block;
+  padding: 3px 11px;
+  border-radius: 999px;
+  background: #eef2f6;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ta-empty {
+  padding: 22px 16px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #f8fafc;
+  color: #64748b;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ---------- value chips ---------- */
+
+.ta-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px 4px 10px;
+  border: 1px solid #e6ebf2;
+  border-radius: 10px;
+  background: #f8fafc;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.ta-chip em {
+  font-style: normal;
+  color: #64748b;
+}
+
+.ta-chip b {
+  min-width: 22px;
+  padding: 2px 8px;
+  border-radius: 7px;
+  background: #fff;
+  color: #0f2540;
+  font-weight: 800;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e6ebf2;
+}

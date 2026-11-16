@@ -1,0 +1,436 @@
+.sidebar {
+  /* Local tokens - they build on your existing theme variables */
+  --sb-accent: var(--primary, #c8841a);
+  --sb-accent-soft: #f6c26b;
+  --sb-text: rgba(255, 255, 255, 0.88);
+  --sb-text-muted: rgba(255, 255, 255, 0.72);
+  --sb-hover: rgba(255, 255, 255, 0.09);
+  --sb-active-bg: color-mix(in srgb, var(--sb-accent) 24%, transparent);
+
+  position: fixed;
+
+  top: 20px;
+  left: 20px;
+  bottom: 20px;
+
+  width: 260px;
+
+  padding: 20px 14px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--sidebar-bg);
+
+  border-radius: 22px;
+
+  box-shadow: var(--shadow-md);
+
+  z-index: 1000;
+
+  /* Fixes the random blue text-selection highlight (Settings chevron bug) */
+  user-select: none;
+  -webkit-user-select: none;
+
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 8px 10px 22px;
+
+  color: var(--sidebar-text);
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: var(--primary);
+  color: #ffffff;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.sidebar-logo h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.sidebar-logo span {
+  display: block;
+
+  margin-top: 3px;
+
+  /* Brighter than before (was 0.65 at 10px) */
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 11px;
+
+  white-space: nowrap;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.sidebar-menu {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding-right: 3px;
+}
+
+.sidebar-item {
+  position: relative;
+
+  width: 100%;
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 5px;
+  padding: 0 13px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: transparent;
+
+  color: var(--sb-text);
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+
+  text-align: left;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.item-icon {
+  flex-shrink: 0;
+
+  color: var(--sb-text-muted);
+
+  transition: color 0.2s ease;
+}
+
+.item-label {
+  white-space: nowrap;
+}
+
+.sidebar-item:hover {
+  background: var(--sb-hover);
+
+  color: #ffffff;
+}
+
+.sidebar-item:hover .item-icon {
+  color: #ffffff;
+}
+
+/* Keyboard focus only (no blue box on mouse click) */
+
+.sidebar-item:focus:not(:focus-visible),
+.logout-button:focus:not(:focus-visible),
+.submenu a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.sidebar-item:focus-visible,
+.logout-button:focus-visible,
+.submenu a:focus-visible {
+  outline: 2px solid var(--sb-accent-soft);
+  outline-offset: 2px;
+}
+
+/* Active */
+
+.sidebar-item.active {
+  background: var(--sb-active-bg);
+
+  color: #ffffff;
+
+  font-weight: 600;
+}
+
+.sidebar-item.active .item-icon {
+  color: var(--sb-accent-soft);
+}
+
+/* Amber indicator bar */
+
+.sidebar-item.active::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 50%;
+
+  width: 4px;
+  height: 22px;
+
+  transform: translateY(-50%);
+
+  border-radius: 0 4px 4px 0;
+
+  background: var(--sb-accent-soft);
+}
+
+/* Parent menu */
+
+.menu-button .arrow {
+  margin-left: auto;
+
+  color: var(--sb-text-muted);
+
+  transition: transform 0.25s ease;
+}
+
+.menu-group.open > .menu-button .arrow {
+  transform: rotate(90deg);
+}
+
+/* Parent that contains the current page */
+
+.menu-button.has-active {
+  color: #ffffff;
+}
+
+.menu-button.has-active .item-icon {
+  color: var(--sb-accent-soft);
+}
+
+/* =========================
+   SUB MENU (smooth expand)
+========================= */
+
+.submenu-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+
+  visibility: hidden;
+
+  transition: grid-template-rows 0.25s ease, visibility 0.25s;
+}
+
+.menu-group.open > .submenu-wrap {
+  grid-template-rows: 1fr;
+
+  visibility: visible;
+}
+
+.submenu {
+  min-height: 0;
+
+  overflow: hidden;
+}
+
+.submenu-inner {
+  margin: 0 0 8px 22px;
+  padding-left: 12px;
+
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.submenu a {
+  display: block;
+
+  padding: 9px 10px;
+
+  color: var(--sb-text-muted);
+
+  border-radius: 8px;
+
+  font-size: 12px;
+  text-decoration: none;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.submenu a:hover {
+  background: var(--sb-hover);
+
+  color: #ffffff;
+}
+
+.submenu a.active {
+  background: rgba(255, 255, 255, 0.07);
+
+  color: var(--sb-accent-soft);
+
+  font-weight: 600;
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+.sidebar-footer {
+  margin-top: 8px;
+  padding-top: 12px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.logout-button {
+  position: relative;
+
+  width: 100%;
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 0 13px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: var(--sb-text);
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.logout-button:hover {
+  background: rgba(220, 60, 60, 0.3);
+
+  color: #ffe3e3;
+}
+
+.logout-button:hover .item-icon {
+  color: #ffb4b4;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+.sidebar-menu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+
+  border-radius: 10px;
+}
+
+/* =========================
+   OVERLAY (only used on mobile / tablet)
+========================= */
+
+.sidebar-overlay {
+  display: none;
+}
+
+/* =========================
+   MOBILE + TABLET  (up to 1024px)
+   Sidebar becomes a slide-in drawer.
+   Laptop / desktop (above 1024px) is not affected at all.
+========================= */
+
+@media (max-width: 1024px) {
+  .sidebar {
+    top: 10px;
+    left: 10px;
+    bottom: 10px;
+
+    width: 270px;
+    max-width: calc(100vw - 20px);
+
+    border-radius: 18px;
+
+    /* Hidden by default */
+    transform: translateX(calc(-100% - 20px));
+    visibility: hidden;
+
+    transition: transform 0.3s ease, visibility 0s linear 0.3s;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    visibility: visible;
+
+    transition: transform 0.3s ease, visibility 0s;
+  }
+
+  .sidebar-overlay {
+    display: block;
+
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.3s ease;
+
+    z-index: 999;
+  }
+
+  .sidebar-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Stop the page behind from scrolling while the drawer is open */
+  body.sidebar-open {
+    overflow: hidden;
+  }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar-overlay,
+  .sidebar-item,
+  .item-icon,
+  .menu-button .arrow,
+  .submenu-wrap,
+  .submenu a,
+  .logout-button {
+    transition: none;
+  }
+}

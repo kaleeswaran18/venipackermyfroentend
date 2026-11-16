@@ -1,0 +1,1163 @@
+/* ================================
+   VEHICLE EXPENSE PAGE
+================================ */
+
+.vehicle-expense-layout {
+  min-height: 100vh;
+  background: #f7f9fc;
+}
+
+.vehicle-expense-main {
+  margin-left: 322px;
+  width: calc(100% - 322px);
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.vehicle-expense-content {
+  padding: 28px 30px 40px;
+}
+
+
+/* ================================
+   PAGE HEADER
+================================ */
+
+.vehicle-expense-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.vehicle-expense-page-header h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+  color: #0f1f3d;
+}
+
+.vehicle-expense-page-header p {
+  margin: 4px 0 0;
+  font-size: 16px;
+  color: #68758a;
+}
+
+
+/* ================================
+   ADD BUTTON
+================================ */
+
+.add-vehicle-expense-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  height: 50px;
+  padding: 0 22px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #1769e8;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.add-vehicle-expense-btn:hover {
+  background: #0f5ed7;
+  box-shadow: 0 6px 16px rgba(23, 105, 232, 0.2);
+}
+
+.add-vehicle-expense-btn:active {
+  transform: translateY(1px);
+}
+
+
+/* ================================
+   FILTER CARD
+================================ */
+
+.vehicle-expense-filter-card {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+
+  padding: 18px;
+
+  margin-bottom: 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7ebf1;
+  border-radius: 10px;
+
+  box-shadow: 0 2px 8px rgba(15, 31, 61, 0.03);
+}
+
+
+/* SEARCH */
+
+.vehicle-expense-search {
+  flex: 1;
+  min-width: 220px;
+}
+
+.vehicle-expense-search input {
+  width: 100%;
+  height: 48px;
+
+  padding: 0 16px;
+
+  border: 1px solid #dce2ea;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  font-size: 14px;
+  color: #24324a;
+
+  outline: none;
+
+  box-sizing: border-box;
+}
+
+.vehicle-expense-search input::placeholder {
+  color: #8a96a8;
+}
+
+.vehicle-expense-search input:focus {
+  border-color: #1769e8;
+  box-shadow: 0 0 0 3px rgba(23, 105, 232, 0.08);
+}
+
+
+/* DATE FILTER */
+
+.vehicle-expense-date-filter {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  height: 48px;
+  padding: 0 12px;
+
+  border: 1px solid #dce2ea;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  min-width: 285px;
+  box-sizing: border-box;
+}
+
+.vehicle-expense-date-filter svg {
+  flex-shrink: 0;
+  color: #66758a;
+}
+
+.vehicle-expense-date-filter input {
+  width: 105px;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  font-size: 13px;
+  color: #4c5a70;
+}
+
+.vehicle-expense-date-filter span {
+  color: #8a96a8;
+}
+
+
+/* FILTER DROPDOWNS */
+
+.vehicle-expense-filter {
+  min-width: 165px;
+}
+
+.vehicle-expense-filter label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  color: #4d5b70;
+}
+
+.vehicle-expense-filter select {
+  width: 100%;
+  height: 48px;
+
+  padding: 0 12px;
+
+  border: 1px solid #dce2ea;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  font-size: 14px;
+  color: #24324a;
+
+  outline: none;
+  cursor: pointer;
+}
+
+.vehicle-expense-filter select:focus {
+  border-color: #1769e8;
+}
+
+
+/* RESET */
+
+.vehicle-expense-reset-btn {
+  height: 48px;
+  min-width: 100px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #f1f4f8;
+  color: #26354d;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.vehicle-expense-reset-btn:hover {
+  background: #e7ebf1;
+}
+
+
+/* ================================
+   TABLE CARD
+================================ */
+
+.vehicle-expense-table-card {
+  background: #ffffff;
+
+  border: 1px solid #e7ebf1;
+  border-radius: 10px;
+
+  box-shadow: 0 2px 8px rgba(15, 31, 61, 0.03);
+
+  overflow: hidden;
+}
+
+
+/* TABLE HEADER */
+
+.vehicle-expense-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 16px 20px;
+}
+
+.vehicle-expense-table-header h2 {
+  margin: 0;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  color: #172640;
+}
+
+.vehicle-expense-show {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  font-size: 13px;
+  color: #69768a;
+}
+
+.vehicle-expense-show select {
+  height: 34px;
+
+  padding: 0 8px;
+
+  border: 1px solid #dce2ea;
+  border-radius: 6px;
+
+  background: #ffffff;
+
+  outline: none;
+
+  cursor: pointer;
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+.vehicle-expense-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.vehicle-expense-table {
+  width: 100%;
+  min-width: 1050px;
+
+  border-collapse: collapse;
+
+  font-size: 14px;
+}
+
+.vehicle-expense-table th {
+  height: 48px;
+
+  padding: 0 14px;
+
+  background: #f1f4f8;
+
+  border-top: 1px solid #e1e6ed;
+  border-bottom: 1px solid #e1e6ed;
+
+  text-align: left;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #29374e;
+
+  white-space: nowrap;
+}
+
+.vehicle-expense-table td {
+  height: 58px;
+
+  padding: 0 14px;
+
+  border-bottom: 1px solid #e9edf2;
+
+  color: #34435a;
+
+  white-space: nowrap;
+}
+
+.vehicle-expense-table tbody tr:hover {
+  background: #fafbfd;
+}
+
+.vehicle-expense-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* EMPTY */
+
+.vehicle-expense-empty {
+  height: 120px !important;
+
+  text-align: center !important;
+
+  color: #8a96a8 !important;
+
+  font-size: 14px;
+}
+
+
+/* ================================
+   STATUS
+================================ */
+
+.vehicle-expense-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 105px;
+
+  padding: 7px 12px;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vehicle-expense-status.completed {
+  background: #e3f6e8;
+  color: #159447;
+}
+
+.vehicle-expense-status.in-progress {
+  background: #fff3d6;
+  color: #c47a00;
+}
+
+
+/* ================================
+   ACTIONS
+================================ */
+
+.vehicle-expense-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vehicle-expense-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border: none;
+  border-radius: 7px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    background 0.2s ease;
+}
+
+.vehicle-expense-actions button:hover {
+  transform: translateY(-1px);
+}
+
+.vehicle-expense-actions button:nth-child(1) {
+  background: #f0f3f7;
+  color: #26364e;
+}
+
+.vehicle-expense-actions button:nth-child(1):hover {
+  background: #e5e9ef;
+}
+
+.vehicle-expense-actions button:nth-child(2) {
+  background: #e5efff;
+  color: #1769e8;
+}
+
+.vehicle-expense-actions button:nth-child(2):hover {
+  background: #d8e8ff;
+}
+
+.vehicle-expense-actions button:nth-child(3) {
+  background: #ffe5e5;
+  color: #e53935;
+}
+
+.vehicle-expense-actions button:nth-child(3):hover {
+  background: #ffd7d7;
+}
+
+
+/* ================================
+   MODAL OVERLAY
+================================ */
+
+.vehicle-expense-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(15, 27, 45, 0.48);
+
+  backdrop-filter: blur(2px);
+}
+
+
+/* ================================
+   MODAL  (wider, for 2 columns)
+================================ */
+
+.vehicle-expense-modal {
+  width: 100%;
+  max-width: 680px;
+  max-height: calc(100vh - 40px);
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 20px 60px rgba(15, 31, 61, 0.2);
+
+  overflow-y: auto;
+
+  animation: vehicleExpenseModalIn 0.2s ease;
+}
+
+@keyframes vehicleExpenseModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* ================================
+   MODAL HEADER
+================================ */
+
+.vehicle-expense-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 26px 28px 18px;
+}
+
+.vehicle-expense-modal-header h2 {
+  margin: 0;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  color: #172640;
+}
+
+.vehicle-expense-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #65738a;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.vehicle-expense-modal-close:hover {
+  background: #f1f4f8;
+  color: #172640;
+}
+
+
+/* ================================
+   FORM  (2 column grid)
+   Used by Add, Edit and View popups
+================================ */
+
+.vehicle-expense-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 20px;
+
+  padding: 0 28px 28px;
+}
+
+.vehicle-expense-form-group {
+  min-width: 0;
+
+  margin-bottom: 20px;
+}
+
+.vehicle-expense-form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #24334c;
+}
+
+.vehicle-expense-form-group label span {
+  color: #e53935;
+}
+
+
+/* ================================
+   INPUTS
+================================ */
+
+.vehicle-expense-form-group input,
+.vehicle-expense-form-group select {
+  width: 100%;
+  height: 50px;
+
+  padding: 0 14px;
+
+  border: 1px solid #d7dee8;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #35445c;
+
+  font-size: 14px;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.vehicle-expense-form-group input::placeholder {
+  color: #8793a5;
+}
+
+.vehicle-expense-form-group input:focus,
+.vehicle-expense-form-group select:focus {
+  border-color: #1769e8;
+
+  box-shadow:
+    0 0 0 3px rgba(23, 105, 232, 0.08);
+}
+
+.vehicle-expense-form-group select {
+  cursor: pointer;
+}
+
+/* Read-only fields (View popup + Total KMs) */
+
+.vehicle-expense-form-group input:read-only {
+  background: #f3f5f8;
+
+  color: #4a5870;
+
+  cursor: default;
+}
+
+.vehicle-expense-form-group input:read-only:focus {
+  border-color: #d7dee8;
+
+  box-shadow: none;
+}
+
+/* small helper text under a field */
+
+.vehicle-expense-hint {
+  display: block;
+
+  margin-top: 6px;
+
+  font-size: 12px;
+
+  color: #8793a5;
+}
+
+
+/* INPUT WITH ICON */
+
+.vehicle-expense-input-icon {
+  position: relative;
+}
+
+.vehicle-expense-input-icon svg {
+  position: absolute;
+
+  left: 14px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #64738a;
+
+  pointer-events: none;
+}
+
+.vehicle-expense-input-icon input {
+  padding-left: 46px;
+}
+
+
+/* ================================
+   MODAL ACTIONS  (full width row)
+================================ */
+
+.vehicle-expense-modal-actions {
+  grid-column: 1 / -1;
+
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  margin-top: 8px;
+}
+
+.vehicle-expense-cancel-btn,
+.vehicle-expense-save-btn {
+  height: 48px;
+
+  padding: 0 28px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.vehicle-expense-cancel-btn {
+  border: 1px solid #dce2ea;
+
+  background: #f3f5f8;
+
+  color: #334158;
+}
+
+.vehicle-expense-cancel-btn:hover {
+  background: #e9edf2;
+}
+
+.vehicle-expense-save-btn {
+  min-width: 120px;
+
+  border: none;
+
+  background: #1769e8;
+
+  color: #ffffff;
+}
+
+.vehicle-expense-save-btn:hover {
+  background: #0f5ed7;
+}
+
+.vehicle-expense-save-btn:disabled,
+.vehicle-expense-cancel-btn:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+.vehicle-expense-save-btn:active,
+.vehicle-expense-cancel-btn:active {
+  transform: translateY(1px);
+}
+
+
+/* ================================
+   TOAST
+   (success / error message)
+================================ */
+
+.vehicle-expense-toast {
+  position: fixed;
+
+  top: 24px;
+  right: 24px;
+
+  z-index: 100000;
+
+  max-width: 380px;
+
+  padding: 14px 18px;
+
+  border: 1px solid #e2e8f0;
+  border-left: 5px solid #64748b;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #24334c;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+
+  box-shadow:
+    0 18px 40px rgba(15, 23, 42, 0.16),
+    0 4px 12px rgba(15, 23, 42, 0.08);
+
+  animation: vehicleExpenseToastIn 0.3s ease-out;
+}
+
+.vehicle-expense-toast.success {
+  border-left-color: #16a34a;
+
+  background: #f0fdf4;
+
+  color: #15803d;
+}
+
+.vehicle-expense-toast.error {
+  border-left-color: #dc2626;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+}
+
+@keyframes vehicleExpenseToastIn {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1200px) {
+  .vehicle-expense-filter-card {
+    flex-wrap: wrap;
+  }
+
+  .vehicle-expense-search {
+    flex: 1 1 100%;
+  }
+
+  .vehicle-expense-date-filter {
+    flex: 1;
+  }
+
+  .vehicle-expense-filter {
+    flex: 1;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .vehicle-expense-main {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .vehicle-expense-content {
+    padding: 24px 20px 30px;
+  }
+
+  .vehicle-expense-page-header {
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .vehicle-expense-page-header h1 {
+    font-size: 28px;
+  }
+
+  .vehicle-expense-filter-card {
+    align-items: stretch;
+  }
+
+  .vehicle-expense-date-filter,
+  .vehicle-expense-filter {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .vehicle-expense-page-header {
+    flex-direction: column;
+  }
+
+  .add-vehicle-expense-btn {
+    width: 100%;
+  }
+
+  .vehicle-expense-filter-card {
+    flex-direction: column;
+  }
+
+  .vehicle-expense-search,
+  .vehicle-expense-date-filter,
+  .vehicle-expense-filter {
+    width: 100%;
+  }
+
+  .vehicle-expense-reset-btn {
+    width: 100%;
+  }
+
+  .vehicle-expense-table-header {
+    align-items: flex-start;
+    gap: 12px;
+    flex-direction: column;
+  }
+
+  .vehicle-expense-modal {
+    max-width: 100%;
+  }
+
+  .vehicle-expense-modal-header {
+    padding: 22px 20px 16px;
+  }
+
+  .vehicle-expense-modal-header h2 {
+    font-size: 21px;
+  }
+
+  /* 2 columns -> 1 column on mobile */
+  .vehicle-expense-form {
+    grid-template-columns: 1fr;
+
+    padding: 0 20px 22px;
+  }
+
+  .vehicle-expense-modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .vehicle-expense-cancel-btn,
+  .vehicle-expense-save-btn {
+    width: 100%;
+  }
+
+  .vehicle-expense-toast {
+    top: 12px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
+  }
+}
+
+
+/* ================================
+   CHANGE HISTORY
+   Vehicle Expense View Modal
+================================ */
+
+.vehicle-expense-history {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin-top: 4px;
+  padding: 18px;
+  border: 1px solid #e5eaf1;
+  border-radius: 12px;
+  background: #fbfcfe;
+}
+
+.vehicle-expense-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.vehicle-expense-history-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  color: #172640;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.vehicle-expense-history-header h3 svg {
+  color: #1769e8;
+}
+
+.vehicle-expense-history-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 20px;
+  background: #e8f1ff;
+  color: #1769e8;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.vehicle-expense-no-history {
+  margin: 0;
+  padding: 18px 12px;
+  border: 1px dashed #d7dee8;
+  border-radius: 8px;
+  color: #8793a5;
+  font-size: 13px;
+  text-align: center;
+}
+
+.vehicle-expense-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vehicle-expense-history-item {
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #e7ebf1;
+  border-left: 3px solid #1769e8;
+  border-radius: 9px;
+  background: #ffffff;
+}
+
+.vehicle-expense-history-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.vehicle-expense-history-user {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  color: #24334c;
+  font-size: 13px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.vehicle-expense-history-date {
+  color: #8793a5;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.vehicle-expense-history-changes {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.vehicle-expense-history-change {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 10px 12px;
+  border-radius: 7px;
+  background: #f7f9fc;
+}
+
+.vehicle-expense-history-field {
+  color: #34435a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.vehicle-expense-history-values {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.vehicle-expense-history-values .old-value,
+.vehicle-expense-history-values .new-value {
+  min-width: 0;
+  padding: 7px 9px;
+  border-radius: 6px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.vehicle-expense-history-values .old-value {
+  background: #fff0f0;
+  color: #b42318;
+}
+
+.vehicle-expense-history-values .new-value {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.vehicle-expense-history-values .history-arrow {
+  color: #8793a5;
+  font-size: 14px;
+}
+
+.vehicle-expense-history-reason {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 7px;
+  background: #fff9e9;
+  color: #76520b;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.vehicle-expense-history-reason strong {
+  margin-right: 5px;
+  color: #634307;
+}
+
+/* Keep history content readable inside the modal */
+.vehicle-expense-history,
+.vehicle-expense-history * {
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .vehicle-expense-history {
+    padding: 13px;
+  }
+
+  .vehicle-expense-history-top {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .vehicle-expense-history-values {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .vehicle-expense-history-values .history-arrow {
+    display: none;
+  }
+}

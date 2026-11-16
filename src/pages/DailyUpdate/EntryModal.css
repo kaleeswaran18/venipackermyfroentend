@@ -1,0 +1,272 @@
+/* =========================================================
+   ENTRY MODAL (Production / Consumption  Add + Edit popup)
+   Not scoped to .daily-update-layout, because the modal is
+   rendered through a portal into document.body.
+========================================================= */
+
+.entry-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(15, 23, 42, 0.58);
+}
+
+.entry-modal-overlay *,
+.entry-modal-overlay *::before,
+.entry-modal-overlay *::after {
+  box-sizing: border-box;
+}
+
+.entry-modal {
+  width: min(560px, 100%);
+  max-height: 90vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.28);
+
+  overflow: hidden;
+  font-family: inherit;
+  color: #0f2742;
+}
+
+/* ---------- Header ---------- */
+
+.entry-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 20px 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.entry-modal-header h3 {
+  margin: 0 0 4px;
+  font-size: 21px;
+  font-weight: 800;
+  color: #0f2742;
+}
+
+.entry-modal-header p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.entry-modal-close {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #f1f5f9;
+  color: #475569;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.entry-modal-close:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+/* ---------- Body ---------- */
+
+.entry-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  padding: 20px 24px;
+  overflow-y: auto;
+}
+
+.entry-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.entry-field label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f2742;
+}
+
+.entry-field-hint {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.entry-field input,
+.entry-field textarea {
+  width: 100%;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #0f172a;
+
+  font-family: inherit;
+  font-size: 15px;
+
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.entry-field input {
+  height: 46px;
+  padding: 0 14px;
+}
+
+.entry-field textarea {
+  min-height: 84px;
+  padding: 11px 14px;
+  resize: vertical;
+}
+
+.entry-field input:focus,
+.entry-field textarea:focus {
+  border-color: #1f6feb;
+  box-shadow: 0 0 0 3px #dbeafe;
+}
+
+.entry-field input.readonly,
+.entry-field input:read-only {
+  background: #f1f5f9;
+  color: #475569;
+  font-weight: 600;
+  cursor: not-allowed;
+}
+
+.entry-field input.readonly:focus,
+.entry-field input:read-only:focus {
+  border-color: #cbd5e1;
+  box-shadow: none;
+}
+
+.entry-modal .entry-modal-error {
+  margin: 0;
+  padding: 11px 14px;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  background: #fef2f2;
+  color: #b91c1c;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ---------- Footer ---------- */
+
+.entry-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+
+  padding: 16px 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.entry-modal .entry-cancel-button,
+.entry-modal .entry-save-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  height: 42px;
+  padding: 0 20px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    filter 0.2s ease;
+}
+
+.entry-modal .entry-cancel-button {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #475569;
+}
+
+.entry-modal .entry-cancel-button:hover {
+  background: #f8fafc;
+}
+
+.entry-modal .entry-save-button {
+  border: 1px solid #16a34a;
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.entry-modal .entry-save-button:hover {
+  background: #15803d;
+}
+
+.entry-modal .entry-save-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 600px) {
+  .entry-modal-overlay {
+    padding: 10px;
+  }
+
+  .entry-modal-header,
+  .entry-modal-body,
+  .entry-modal-footer {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .entry-modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .entry-modal .entry-cancel-button,
+  .entry-modal .entry-save-button {
+    width: 100%;
+  }
+}
