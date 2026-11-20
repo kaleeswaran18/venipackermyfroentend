@@ -12,7 +12,7 @@ import CurrentStockSection from "./sections/CurrentStockSection";
 
 import { getList } from "./utils";
 
-import "./OverallStock.css";
+import "./Overallstock.css";
 import "./CategoryStock.css";
 
 // "/daily-history/today" returns ONE object ({ data: { _id, date, ... } }),
