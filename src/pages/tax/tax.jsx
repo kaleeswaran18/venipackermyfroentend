@@ -18,7 +18,7 @@ import api from "../../api/axios";
 import Sidebar from "../../components/layout/Sidebar";
 import Header from "../../components/layout/Header";
 
-import "./Tax.css";
+import "./tax.css";
 
 /* =========================================================
    CONSTANTS / HELPERS
