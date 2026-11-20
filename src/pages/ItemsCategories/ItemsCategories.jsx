@@ -303,7 +303,7 @@ function ItemsCategories() {
   };
 
   return (
-    <div className="locations-layout">
+    <div className="cat-layout">
 
       {/* ======================================
           TOAST
@@ -311,9 +311,9 @@ function ItemsCategories() {
 
       {toast.show && (
         <div
-          className={`location-toast location-toast-${toast.type}`}
+          className={`cat-toast cat-toast-${toast.type}`}
         >
-          <div className="location-toast-icon">
+          <div className="cat-toast-icon">
             {toast.type === "success" ? (
               <CheckCircle size={21} />
             ) : (
@@ -321,7 +321,7 @@ function ItemsCategories() {
             )}
           </div>
 
-          <div className="location-toast-content">
+          <div className="cat-toast-content">
             <strong>{toast.title}</strong>
 
             <span>{toast.message}</span>
@@ -329,7 +329,7 @@ function ItemsCategories() {
 
           <button
             type="button"
-            className="location-toast-close"
+            className="cat-toast-close"
             onClick={closeToast}
             aria-label="Close notification"
           >
@@ -344,20 +344,20 @@ function ItemsCategories() {
 
       {deleteModal.show && (
         <div
-          className="delete-modal-overlay"
+          className="cat-delete-modal-overlay"
           onClick={closeDeleteModal}
         >
           <div
-            className="delete-modal"
+            className="cat-delete-modal"
             onClick={(event) =>
               event.stopPropagation()
             }
           >
-            <div className="delete-modal-icon">
+            <div className="cat-delete-modal-icon">
               <Trash2 size={25} />
             </div>
 
-            <div className="delete-modal-content">
+            <div className="cat-delete-modal-content">
               <h3>Delete Item Category?</h3>
 
               <p>
@@ -373,10 +373,10 @@ function ItemsCategories() {
               </span>
             </div>
 
-            <div className="delete-modal-actions">
+            <div className="cat-delete-modal-actions">
               <button
                 type="button"
-                className="delete-cancel-btn"
+                className="cat-delete-cancel-btn"
                 onClick={closeDeleteModal}
               >
                 Cancel
@@ -384,7 +384,7 @@ function ItemsCategories() {
 
               <button
                 type="button"
-                className="delete-confirm-btn"
+                className="cat-delete-confirm-btn"
                 onClick={confirmDelete}
               >
                 <Trash2 size={16} />
@@ -397,16 +397,16 @@ function ItemsCategories() {
 
       <Sidebar />
 
-      <div className="locations-main">
+      <div className="cat-main">
         <Header />
 
-        <main className="locations-content">
+        <main className="cat-content">
 
           {/* =====================================
               PAGE HEADER
           ====================================== */}
 
-          <div className="locations-page-header">
+          <div className="cat-page-header">
             <div>
               <h1>Items Categories</h1>
 
@@ -417,7 +417,7 @@ function ItemsCategories() {
 
             <button
               type="button"
-              className="add-location-btn"
+              className="cat-add-btn"
               onClick={handleAddCategory}
             >
               <Plus size={18} />
@@ -430,9 +430,9 @@ function ItemsCategories() {
           ====================================== */}
 
           {showForm && (
-            <section className="location-form-card">
+            <section className="cat-form-card">
 
-              <div className="form-header">
+              <div className="cat-form-header">
 
                 <div>
                   <h2>
@@ -450,7 +450,7 @@ function ItemsCategories() {
 
                 <button
                   type="button"
-                  className="close-form-btn"
+                  className="cat-close-form-btn"
                   onClick={handleCloseForm}
                   aria-label="Close form"
                 >
@@ -461,9 +461,9 @@ function ItemsCategories() {
 
               <form onSubmit={handleSubmit}>
 
-                <div className="form-grid">
+                <div className="cat-form-grid">
 
-                  <div className="form-group">
+                  <div className="cat-form-group">
 
                     <label htmlFor="category-name">
                       Category Name{" "}
@@ -483,11 +483,11 @@ function ItemsCategories() {
 
                 </div>
 
-                <div className="form-actions">
+                <div className="cat-form-actions">
 
                   <button
                     type="button"
-                    className="cancel-btn"
+                    className="cat-cancel-btn"
                     onClick={handleCloseForm}
                   >
                     Cancel
@@ -495,7 +495,7 @@ function ItemsCategories() {
 
                   <button
                     type="submit"
-                    className="save-location-btn"
+                    className="cat-save-btn"
                   >
                     {editingId
                       ? "Update Category"
@@ -513,9 +513,9 @@ function ItemsCategories() {
               ALL ITEM CATEGORIES
           ====================================== */}
 
-          <section className="locations-table-card">
+          <section className="cat-table-card">
 
-            <div className="table-section-header">
+            <div className="cat-table-section-header">
 
               <div>
                 <h2>All Item Categories</h2>
@@ -531,9 +531,9 @@ function ItemsCategories() {
 
             </div>
 
-            <div className="table-wrapper">
+            <div className="cat-table-wrapper">
 
-              <table className="locations-table">
+              <table className="cat-table">
 
                 <thead>
                   <tr>
@@ -549,7 +549,7 @@ function ItemsCategories() {
                     <tr>
                       <td
                         colSpan="3"
-                        className="empty-state"
+                        className="cat-empty-state"
                       >
                         Loading item categories...
                       </td>
@@ -563,17 +563,17 @@ function ItemsCategories() {
                             {index + 1}
                           </td>
 
-                          <td className="location-name">
+                          <td className="cat-name">
                             {category.name}
                           </td>
 
                           <td>
 
-                            <div className="action-buttons">
+                            <div className="cat-action-buttons">
 
                               <button
                                 type="button"
-                                className="edit-btn"
+                                className="cat-edit-btn"
                                 onClick={() =>
                                   handleEdit(category)
                                 }
@@ -584,7 +584,7 @@ function ItemsCategories() {
 
                               <button
                                 type="button"
-                                className="delete-btn"
+                                className="cat-delete-btn"
                                 onClick={() =>
                                   handleDelete(category)
                                 }
@@ -604,7 +604,7 @@ function ItemsCategories() {
                     <tr>
                       <td
                         colSpan="3"
-                        className="empty-state"
+                        className="cat-empty-state"
                       >
                         No item categories found.
                       </td>
