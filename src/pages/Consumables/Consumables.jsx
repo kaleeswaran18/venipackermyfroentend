@@ -14,7 +14,7 @@ import api from "../../api/axios";
 import Sidebar from "../../components/layout/Sidebar";
 import Header from "../../components/layout/Header";
 
-import "./Consumables.css";
+import "./consumables.css";
 
 function Consumables() {
   const [showForm, setShowForm] = useState(false);
