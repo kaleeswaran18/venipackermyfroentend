@@ -18,6 +18,11 @@ import api from "../../api/axios";
 
 import "./VehicleExpense.css";
 
+// Additional vehicle expense fields
+const ADDITIONAL_EXPENSE_FIELDS = [
+  { name: "otherAmount", label: "Other Amount" },
+];
+
 function VehicleExpense() {
   // ==========================================
   // VEHICLE EXPENSE DATA
@@ -74,6 +79,8 @@ function VehicleExpense() {
     endKms: "",
     totalKms: "",
     diesel: "",
+    otherAmount: "",
+    remarkDescription: [{ description: "", amount: "" }],
     status: "In Progress",
   };
 
@@ -299,6 +306,21 @@ function VehicleExpense() {
         diesel:
           item.diesel ?? "",
 
+        // Prefill the saved Other Amount when Update is clicked.
+        otherAmount:
+          item.otherAmount !== undefined && item.otherAmount !== null
+            ? item.otherAmount
+            : "",
+        remarkDescription: Array.isArray(item.remarkDescription) && item.remarkDescription.length
+          ? item.remarkDescription.map((entry) => ({
+              description: entry?.description || "",
+              amount:
+                entry?.amount !== undefined && entry?.amount !== null
+                  ? entry.amount
+                  : "",
+            }))
+          : [{ description: "", amount: "" }],
+
         status:
           item.status || "In Progress",
       });
@@ -351,6 +373,43 @@ function VehicleExpense() {
       setLoading(false);
     }
   };
+
+  // ==========================================
+  // REMARK DESCRIPTION ROWS
+  // ==========================================
+
+  const handleRemarkChange = (index, field, value) => {
+    setFormData((current) => ({
+      ...current,
+      remarkDescription: current.remarkDescription.map((entry, i) =>
+        i === index ? { ...entry, [field]: value } : entry
+      ),
+    }));
+  };
+
+  const addRemarkRow = () => {
+    setFormData((current) => ({
+      ...current,
+      remarkDescription: [
+        ...current.remarkDescription,
+        { description: "", amount: "" },
+      ],
+    }));
+  };
+
+  const removeRemarkRow = (index) => {
+    setFormData((current) => ({
+      ...current,
+      remarkDescription: current.remarkDescription.length > 1
+        ? current.remarkDescription.filter((_, i) => i !== index)
+        : [{ description: "", amount: "" }],
+    }));
+  };
+
+  const remarkDescriptionTotal = formData.remarkDescription.reduce(
+    (sum, entry) => sum + Number(entry.amount || 0),
+    0
+  );
 
   // ==========================================
   // INPUT CHANGE
@@ -442,6 +501,11 @@ function VehicleExpense() {
           formData.diesel !== "" &&
           formData.diesel !== null;
 
+        if (Math.abs(remarkDescriptionTotal - Number(formData.otherAmount || 0)) > 0.009) {
+          showToast("error", "Remark description amounts must equal Other Amount.");
+          return;
+        }
+
         // End KMs can not be less than Start KMs
         if (
           (isCompleted || hasEndKms) &&
@@ -466,6 +530,14 @@ function VehicleExpense() {
             Number(formData.startKms),
           status:
             formData.status,
+
+          otherAmount: Number(formData.otherAmount || 0),
+          remarkDescription: formData.remarkDescription
+            .filter((entry) => entry.description.trim() || entry.amount !== "")
+            .map((entry) => ({
+              description: entry.description.trim(),
+              amount: Number(entry.amount || 0),
+            })),
         };
 
         // Completed -> End KMs + Diesel required
@@ -619,8 +691,22 @@ function VehicleExpense() {
       return "—";
     }
 
-    if (field === "diesel") {
+    // Diesel and Other Amount should be displayed as currency in history.
+    if (field === "diesel" || field === "otherAmount") {
       return `₹ ${Number(value).toLocaleString("en-IN")}`;
+    }
+
+    // Show remark breakdown clearly instead of [object Object].
+    if (field === "remarkDescription") {
+      if (!Array.isArray(value) || value.length === 0) return "—";
+
+      return value
+        .map((entry) => {
+          const description = entry?.description || "—";
+          const amount = Number(entry?.amount || 0).toLocaleString("en-IN");
+          return `${description}: ₹ ${amount}`;
+        })
+        .join(", ");
     }
 
     if (field === "date") {
@@ -652,6 +738,8 @@ function VehicleExpense() {
       endKms: "End KMs",
       totalKms: "Total KMs",
       diesel: "Diesel Amount",
+      otherAmount: "Other Amount",
+      remarkDescription: "Remark Description",
       vehicle: "Vehicle",
       driver: "Driver",
       date: "Date",
@@ -914,6 +1002,10 @@ function VehicleExpense() {
                       Diesel
                     </th>
 
+                    {ADDITIONAL_EXPENSE_FIELDS.map((field) => (
+                      <th key={field.name}>{field.label}</th>
+                    ))}
+
                     <th>
                       Status
                     </th>
@@ -931,7 +1023,7 @@ function VehicleExpense() {
 
                     <tr>
                       <td
-                        colSpan="10"
+                        colSpan="11"
                         className="vehicle-expense-empty"
                       >
                         Loading...
@@ -943,7 +1035,7 @@ function VehicleExpense() {
 
                     <tr>
                       <td
-                        colSpan="10"
+                        colSpan="11"
                         className="vehicle-expense-empty"
                       >
                         No vehicle expense
@@ -1004,6 +1096,14 @@ function VehicleExpense() {
                                 )}`
                               : "—"}
                           </td>
+
+                          {ADDITIONAL_EXPENSE_FIELDS.map((field) => (
+                            <td key={field.name}>
+                              {Number(expense[field.name] || 0) > 0
+                                ? `₹ ${Number(expense[field.name]).toLocaleString("en-IN")}`
+                                : "—"}
+                            </td>
+                          ))}
 
                           <td>
 
@@ -1371,6 +1471,55 @@ function VehicleExpense() {
 
                   </div>
 
+                  {/* ADDITIONAL EXPENSES */}
+                  {ADDITIONAL_EXPENSE_FIELDS.map((field) => (
+                    <div
+                      className="vehicle-expense-form-group"
+                      key={field.name}
+                    >
+                      <label>{field.label}</label>
+                      <input
+                        type="number"
+                        name={field.name}
+                        value={formData[field.name]}
+                        onChange={handleChange}
+                        placeholder={`Enter ${field.label.toLowerCase()} amount`}
+                        min="0"
+                        step="0.01"
+                      />
+                    </div>
+                  ))}
+
+                  {/* REMARK DESCRIPTION BREAKDOWN */}
+                  <div className="vehicle-expense-form-group" style={{ gridColumn: "1 / -1" }}>
+                    <label>Remark Description (Breakdown of Other Amount)</label>
+                    {formData.remarkDescription.map((entry, index) => (
+                      <div key={index} style={{ display: "grid", gridTemplateColumns: "2fr 1fr auto", gap: "10px", marginBottom: "10px" }}>
+                        <input
+                          type="text"
+                          value={entry.description}
+                          onChange={(e) => handleRemarkChange(index, "description", e.target.value)}
+                          placeholder="Description (e.g. Dress)"
+                        />
+                        <input
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          value={entry.amount}
+                          onChange={(e) => handleRemarkChange(index, "amount", e.target.value)}
+                          placeholder="Amount"
+                        />
+                        <button type="button" onClick={() => removeRemarkRow(index)} aria-label="Remove remark">
+                          <X size={16} />
+                        </button>
+                      </div>
+                    ))}
+                    <button type="button" onClick={addRemarkRow}>+ Add Description</button>
+                    <small className="vehicle-expense-hint">
+                      Description Total: ₹ {remarkDescriptionTotal.toLocaleString("en-IN")} / Other Amount: ₹ {Number(formData.otherAmount || 0).toLocaleString("en-IN")}
+                    </small>
+                  </div>
+
                 </>
 
               )}
@@ -1554,6 +1703,37 @@ function VehicleExpense() {
                   }
                   readOnly
                 />
+              </div>
+
+              {ADDITIONAL_EXPENSE_FIELDS.map((field) => (
+                <div
+                  className="vehicle-expense-form-group"
+                  key={field.name}
+                >
+                  <label>{field.label}</label>
+                  <input
+                    value={
+                      Number(viewExpense[field.name] || 0) > 0
+                        ? `₹ ${Number(viewExpense[field.name]).toLocaleString("en-IN")}`
+                        : "—"
+                    }
+                    readOnly
+                  />
+                </div>
+              ))}
+
+              <div className="vehicle-expense-form-group" style={{ gridColumn: "1 / -1" }}>
+                <label>Remark Description</label>
+                {(viewExpense.remarkDescription || []).length ? (
+                  (viewExpense.remarkDescription || []).map((entry, index) => (
+                    <div key={entry._id || index} style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "8px 0", borderBottom: "1px solid #eee" }}>
+                      <span>{entry.description || "—"}</span>
+                      <strong>₹ {Number(entry.amount || 0).toLocaleString("en-IN")}</strong>
+                    </div>
+                  ))
+                ) : (
+                  <p>—</p>
+                )}
               </div>
 
               <div className="vehicle-expense-form-group">

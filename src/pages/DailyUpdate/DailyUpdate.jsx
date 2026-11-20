@@ -1202,7 +1202,7 @@ function ConsumptionSection({
       item.pieces.forEach((piece, index) => {
         fields.push({
           key: `piece_${index}`,
-          label: `Pieces (${piece.width} x ${piece.inch} x ${piece.feet})`,
+          label: `Pieces (${piece.width}  x ${piece.height} x ${piece.inch})`,
           type: "number",
           hint: `Today's total: ${piece.count ?? 0}`,
         });
@@ -1278,7 +1278,7 @@ function ConsumptionSection({
       data.pieces.forEach((piece, index) => {
         fields.push({
           key: `piece_${index}`,
-          label: `Pieces (${piece.width} x ${piece.inch} x ${piece.feet})`,
+          label: `Pieces (${piece.width} x ${piece.height} x ${piece.inch})`,
           type: "number",
         });
         initialValues[`piece_${index}`] = piece.count ?? 0;
@@ -1334,8 +1334,9 @@ function ConsumptionSection({
       payload.pieces = source.pieces.map((piece, index) => ({
         pieceSizeId: piece.pieceSizeId,
         width: piece.width,
+        height: piece.height,
         inch: piece.inch,
-        feet: piece.feet,
+       
         count: Number(formValues[`piece_${index}`] || 0),
       }));
 
@@ -1691,7 +1692,7 @@ function PieceSummary({ pieces }) {
       {pieces.map((piece, index) => (
         <span key={piece.pieceSizeId || index} className="value-chip">
           <em>
-            {piece.width} x {piece.inch} x {piece.feet}
+            {piece.width} x {piece.height} x {piece.inch}
           </em>
           <b>{piece.count ?? 0}</b>
         </span>
@@ -1734,7 +1735,7 @@ function ConsumptionValue({ data }) {
         {usedPieces.map((piece, index) => (
           <span key={piece.pieceSizeId || index} className="value-chip">
             <em>
-              {piece.width} x {piece.inch} x {piece.feet}
+              {piece.width} x {piece.height} x {piece.inch}
             </em>
             <b>{piece.count}</b>
           </span>

@@ -35,6 +35,9 @@ import StockTransfer from "./pages/StockTransfer/StockTransfer";
 import FinanceCategory from "./pages/FinanceCategory/FinanceCategory";
 import FinanceTransaction from "./pages/finance-transaction/FinanceTransaction";
 import Companies from "./pages/Companies/Companies";
+import NailsWorker from "./pages/NailPacking/NailPacking";
+import DailyLog from "./pages/DailyLogs/DailyLogs";
+import ContractWork from "./pages/ContractWork/ContractWork";
 function ProtectedRoute() {
   const accessToken = localStorage.getItem("accessToken");
 
@@ -89,6 +92,9 @@ function App() {
         <Route path="/master/financeCategory" element={<FinanceCategory />}/>
         <Route path="/master/financeTransaction" element={<FinanceTransaction />}/>
         <Route path="/master/company" element={<Companies />}/>
+        <Route path="/master/nailsworker" element={<NailsWorker />}/>
+        <Route path="/master/daily-log" element={<DailyLog />}/>
+<Route path="/master/contractwork" element={<ContractWork />}/>
 {/* <Route path="/master/purchase/edit/:id" element={<NewPurchase />} /> */}
        {/* /master/VehicleExpense */}
        {/* Property */}

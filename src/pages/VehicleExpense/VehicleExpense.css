@@ -1161,3 +1161,163 @@
     display: none;
   }
 }
+
+/* ================================
+   OTHER AMOUNT + REMARK BREAKDOWN
+================================ */
+
+/* Full-width breakdown section inside Add/Edit/View modal */
+.vehicle-expense-form-group[style*="grid-column"] {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+/* Remark description input rows */
+.vehicle-expense-form-group[style*="grid-column"] > div[style*="grid-template-columns"] {
+  display: grid !important;
+  grid-template-columns: minmax(0, 2fr) minmax(120px, 1fr) 42px !important;
+  align-items: center;
+  gap: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.vehicle-expense-form-group[style*="grid-column"] > div[style*="grid-template-columns"] input {
+  width: 100%;
+  min-width: 0;
+  height: 46px;
+  padding: 0 12px;
+  border: 1px solid #d7dee8;
+  border-radius: 8px;
+  background: #fff;
+  color: #35445c;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vehicle-expense-form-group[style*="grid-column"] > div[style*="grid-template-columns"] input:focus {
+  border-color: #1769e8;
+  box-shadow: 0 0 0 3px rgba(23, 105, 232, 0.08);
+}
+
+/* Remove remark row button */
+.vehicle-expense-form-group[style*="grid-column"] > div[style*="grid-template-columns"] button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fff1f2;
+  color: #dc2626;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.vehicle-expense-form-group[style*="grid-column"] > div[style*="grid-template-columns"] button:hover {
+  background: #ffe4e6;
+  transform: translateY(-1px);
+}
+
+/* Add description button */
+.vehicle-expense-form-group[style*="grid-column"] > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid #1769e8;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #1769e8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.vehicle-expense-form-group[style*="grid-column"] > button:hover {
+  background: #dbeafe;
+  border-color: #0f5ed7;
+}
+
+.vehicle-expense-form-group[style*="grid-column"] .vehicle-expense-hint {
+  display: block;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  background: #f5f9ff;
+  color: #315b91;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Read-only remark rows in View modal */
+.vehicle-expense-form-group[style*="grid-column"] > div[style*="justify-content"] {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  padding: 11px 12px !important;
+  border: 1px solid #e7ebf1;
+  border-radius: 8px;
+  background: #fbfcfe;
+  color: #34435a;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.vehicle-expense-form-group[style*="grid-column"] > div[style*="justify-content"] strong {
+  flex-shrink: 0;
+  color: #172640;
+  font-size: 13px;
+}
+
+.vehicle-expense-form-group[style*="grid-column"] > p {
+  margin: 0;
+  padding: 12px;
+  color: #8793a5;
+  border: 1px dashed #d7dee8;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Disabled buttons */
+.vehicle-expense-form-group button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ================================
+   RESPONSIVE REMARK ROWS
+================================ */
+
+@media (max-width: 600px) {
+  .vehicle-expense-form-group[style*="grid-column"] > div[style*="grid-template-columns"] {
+    grid-template-columns: minmax(0, 1fr) 42px !important;
+    gap: 8px !important;
+  }
+
+  .vehicle-expense-form-group[style*="grid-column"] > div[style*="grid-template-columns"] input:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .vehicle-expense-form-group[style*="grid-column"] > div[style*="grid-template-columns"] input:nth-child(2) {
+    grid-column: 1;
+  }
+
+  .vehicle-expense-form-group[style*="grid-column"] > div[style*="grid-template-columns"] button {
+    grid-column: 2;
+    grid-row: 2;
+    width: 42px;
+  }
+
+  .vehicle-expense-form-group[style*="grid-column"] > div[style*="justify-content"] {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px !important;
+  }
+}

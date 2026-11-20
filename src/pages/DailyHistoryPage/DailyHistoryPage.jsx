@@ -178,7 +178,7 @@ const getValueItems = (data) => {
       .filter((piece) => Number(piece.count || 0) > 0)
       .forEach((piece) => {
         items.push({
-          label: `${piece.width} x ${piece.inch} x ${piece.feet}`,
+          label: `${piece.width}x ${piece.height} x ${piece.inch} `,
           value: piece.count,
         });
       });

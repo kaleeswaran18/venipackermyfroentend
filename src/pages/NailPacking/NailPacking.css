@@ -1,0 +1,512 @@
+
+/* =========================================
+   NAIL PACKING LAYOUT
+========================================= */
+
+.nail-packing-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.nail-packing-main {
+  flex: 1;
+  min-width: 0;
+  margin-left: 260px;
+}
+
+.nail-packing-content {
+  padding: 28px;
+  width: 100%;
+}
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.nail-packing-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.nail-packing-page-header h1 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.nail-packing-page-header p {
+  margin: 7px 0 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* =========================================
+   FILTER CARD
+========================================= */
+
+.nail-packing-filter-card {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 20px;
+  margin-bottom: 22px;
+  background: #ffffff;
+  border: 1px solid #e8edf4;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.nail-packing-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 180px;
+}
+
+.nail-packing-filter-group label {
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.nail-packing-filter-group select {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  color: #334155;
+  background: #ffffff;
+  border: 1px solid #dbe2ea;
+  border-radius: 7px;
+  outline: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.nail-packing-filter-group select:focus {
+  border-color: #2563eb;
+}
+
+/* =========================================
+   TABLE CARD
+========================================= */
+
+.nail-packing-table-card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e8edf4;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+}
+
+.nail-packing-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.nail-packing-table-header h2 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.nail-packing-table-header p {
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
+
+.nail-packing-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.nail-packing-table {
+  width: 100%;
+  min-width: 850px;
+  border-collapse: collapse;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.nail-packing-table thead {
+  background: #f8fafc;
+}
+
+.nail-packing-table thead th {
+  padding: 15px 16px;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.nail-packing-table tbody td {
+  padding: 14px 16px;
+  color: #475569;
+  border-bottom: 1px solid #edf0f5;
+  font-size: 13px;
+}
+
+.nail-packing-table tbody tr {
+  transition: background 0.2s;
+}
+
+.nail-packing-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.nail-packing-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.nail-packing-date {
+  color: #1e293b !important;
+  font-weight: 600;
+}
+
+.nail-packing-day-total {
+  color: #1d4ed8 !important;
+  font-weight: 700;
+  background: #eff6ff;
+}
+
+.nail-packing-remarks {
+  min-width: 130px;
+  color: #64748b !important;
+  text-align: left;
+  white-space: normal;
+}
+
+/* =========================================
+   MONTHLY TOTAL
+========================================= */
+
+.nail-packing-table tfoot {
+  background: #eff6ff;
+}
+
+.nail-packing-table tfoot th {
+  padding: 16px;
+  color: #1e40af;
+  border-top: 2px solid #bfdbfe;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* =========================================
+   EDIT BUTTON
+========================================= */
+
+.nail-packing-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 11px;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nail-packing-edit-btn:hover {
+  color: #ffffff;
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.nail-packing-empty {
+  padding: 35px 15px !important;
+  color: #94a3b8 !important;
+  text-align: center;
+  font-size: 14px !important;
+}
+
+/* =========================================
+   EDIT MODAL
+========================================= */
+
+.nail-packing-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+.nail-packing-modal {
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+  animation: nailPackingModalIn 0.2s ease-out;
+}
+
+@keyframes nailPackingModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nail-packing-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 20px 22px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.nail-packing-modal-header h2 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.nail-packing-modal-header p {
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.nail-packing-modal-header button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  color: #64748b;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.nail-packing-modal-header button:hover {
+  color: #1e293b;
+  background: #e2e8f0;
+}
+
+/* =========================================
+   EDIT PRODUCTS
+========================================= */
+
+.nail-packing-edit-products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 22px;
+}
+
+.nail-packing-edit-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nail-packing-edit-row label,
+.nail-packing-form-group label {
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.nail-packing-edit-row input,
+.nail-packing-form-group textarea {
+  width: 100%;
+  padding: 11px 12px;
+  color: #334155;
+  background: #ffffff;
+  border: 1px solid #dbe2ea;
+  border-radius: 7px;
+  outline: none;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.nail-packing-edit-row input {
+  height: 42px;
+}
+
+.nail-packing-edit-row input:focus,
+.nail-packing-form-group textarea:focus {
+  border-color: #2563eb;
+}
+
+/* =========================================
+   REMARKS
+========================================= */
+
+.nail-packing-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 22px 22px;
+}
+
+.nail-packing-form-group textarea {
+  min-height: 85px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* =========================================
+   FORM ACTIONS
+========================================= */
+
+.nail-packing-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 22px;
+  background: #f8fafc;
+  border-top: 1px solid #edf0f5;
+}
+
+.nail-packing-cancel-btn,
+.nail-packing-save-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 105px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nail-packing-cancel-btn {
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+}
+
+.nail-packing-cancel-btn:hover {
+  background: #f1f5f9;
+}
+
+.nail-packing-save-btn {
+  color: #ffffff;
+  background: #2563eb;
+  border: 1px solid #2563eb;
+}
+
+.nail-packing-save-btn:hover {
+  background: #1d4ed8;
+}
+
+.nail-packing-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1024px) {
+  .nail-packing-content {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nail-packing-main {
+    margin-left: 0;
+  }
+
+  .nail-packing-content {
+    padding: 16px;
+  }
+
+  .nail-packing-page-header h1 {
+    font-size: 22px;
+  }
+
+  .nail-packing-filter-card {
+    padding: 16px;
+  }
+
+  .nail-packing-filter-group {
+    flex: 1;
+    min-width: 130px;
+  }
+
+  .nail-packing-edit-products {
+    grid-template-columns: 1fr;
+  }
+
+  .nail-packing-modal {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .nail-packing-content {
+    padding: 12px;
+  }
+
+  .nail-packing-table-header {
+    padding: 16px;
+  }
+
+  .nail-packing-form-actions {
+    padding: 14px 16px;
+  }
+
+  .nail-packing-modal-header {
+    padding: 16px;
+  }
+
+  .nail-packing-edit-products {
+    padding: 16px;
+  }
+
+  .nail-packing-form-group {
+    padding: 0 16px 16px;
+  }
+}

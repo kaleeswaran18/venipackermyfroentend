@@ -84,8 +84,10 @@ const MENU = [
       { label: "stocktransfer", href: "/master/stocktransfer" },
       { label: "financeCategory", href: "/master/financeCategory" },
       { label: "financeTransaction", href: "/master/financeTransaction" },
+       {label:"daily log", href:"/master/daily-log"},
       { label: "company", href: "/master/company" },
-
+       { label: "nailsworker", href: "/master/nailsworker" },
+      { label: "contractwork", href: "/master/contractwork" },
       // Property  
       
     ],

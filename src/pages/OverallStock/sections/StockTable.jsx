@@ -1,7 +1,19 @@
+
 import { formatQuantity } from "../utils";
 
 // variant: "new" | "used" | "simple"
 const COLUMN_COUNT = { new: 6, used: 4, simple: 3 };
+
+const getPieceCft = (piece) => {
+  const width = Number(piece.width || 0);
+  const height = Number(piece.height || 0);
+  const inch = Number(piece.inch || 0);
+  const count = Number(piece.count || 0);
+
+  return (width * height * inch * count) / 1728;
+};
+
+const getCubicMeter = (cft) => cft * 0.0283168;
 
 function StockTable({ title, nameHeader, rows, variant, scopeName }) {
   return (
@@ -44,60 +56,98 @@ function StockTable({ title, nameHeader, rows, variant, scopeName }) {
                 </td>
               </tr>
             ) : (
-              rows.map((row, index) => (
-                <tr key={row.id || index}>
-                  <td className="col-no">{index + 1}</td>
+              rows.map((row, index) => {
+                const pieces = row.pieces || [];
 
-                  {variant !== "simple" && (
-                    <td>
-                      <span className="chip">{row.category}</span>
-                    </td>
-                  )}
+                const totalCft = pieces.reduce(
+                  (total, piece) => total + getPieceCft(piece),
+                  0
+                );
 
-                  <td className="col-left col-name">{row.name}</td>
+                const totalCubicMeter = getCubicMeter(totalCft);
 
-                  {variant === "new" ? (
-                    <>
-                      <td>{row.cft ?? "-"}</td>
-                      <td>{row.cubicMeter ?? "-"}</td>
+                return (
+                  <tr key={row.id || index}>
+                    <td className="col-no">{index + 1}</td>
 
-                      <td className="col-left col-pieces">
-                        {row.pieces && row.pieces.length > 0 ? (
-                          <table className="piece-table">
-                            <thead>
-                              <tr>
-                                <th>WIDTH</th>
-                                <th>INCH</th>
-                                <th>FEET</th>
-                                <th>COUNT</th>
-                              </tr>
-                            </thead>
+                    {variant !== "simple" && (
+                      <td>
+                        <span className="chip">{row.category}</span>
+                      </td>
+                    )}
 
-                            <tbody>
-                              {row.pieces.map((piece, pieceIndex) => (
-                                <tr
-                                  key={piece._id || piece.id || pieceIndex}
-                                >
-                                  <td>{piece.width}</td>
-                                  <td>{piece.inch}</td>
-                                  <td>{piece.feet}</td>
-                                  <td className="piece-count">
-                                    {piece.count}
+                    <td className="col-left col-name">{row.name}</td>
+
+                    {variant === "new" ? (
+                      <>
+                        <td>{row.cft ?? "-"}</td>
+                        <td>{row.cubicMeter ?? "-"}</td>
+
+                        <td className="col-left col-pieces">
+                          {pieces.length > 0 ? (
+                            <table className="piece-table">
+                              <thead>
+                                <tr>
+                                  <th>WIDTH</th>
+                                  <th>HEIGHT</th>
+                                  <th>INCH</th>
+                                  <th>COUNT</th>
+                                  <th>CFT</th>
+                                  <th>CUBIC METER</th>
+                                </tr>
+                              </thead>
+
+                              <tbody>
+                                {pieces.map((piece, pieceIndex) => {
+                                  const cft = getPieceCft(piece);
+                                  const cubicMeter = getCubicMeter(cft);
+
+                                  return (
+                                    <tr
+                                      key={
+                                        piece._id || piece.id || pieceIndex
+                                      }
+                                    >
+                                      <td>{piece.width}</td>
+                                      <td>{piece.height}</td>
+                                      <td>{piece.inch}</td>
+
+                                      <td className="piece-count">
+                                        {piece.count}
+                                      </td>
+
+                                      <td>{cft.toFixed(4)}</td>
+                                      <td>{cubicMeter.toFixed(6)}</td>
+                                    </tr>
+                                  );
+                                })}
+
+                                <tr className="piece-total-row">
+                                  <td colSpan={4}>
+                                    <strong>TOTAL</strong>
+                                  </td>
+                                  <td>
+                                    <strong>{totalCft.toFixed(4)}</strong>
+                                  </td>
+                                  <td>
+                                    <strong>
+                                      {totalCubicMeter.toFixed(6)}
+                                    </strong>
                                   </td>
                                 </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        ) : (
-                          "-"
-                        )}
-                      </td>
-                    </>
-                  ) : (
-                    <td className="col-stock">{formatQuantity(row)}</td>
-                  )}
-                </tr>
-              ))
+                              </tbody>
+                            </table>
+                          ) : (
+                            "-"
+                          )}
+                        </td>
+                      </>
+                    ) : (
+                      <td className="col-stock">{formatQuantity(row)}</td>
+                    )}
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>

@@ -1,3 +1,4 @@
+
 import { useMemo, useState } from "react";
 import { Package, Hammer, Droplets } from "lucide-react";
 
@@ -14,6 +15,27 @@ const ITEM_KIND_TABS = [
   { key: "new", label: "New Item" },
   { key: "used", label: "Used Item" },
 ];
+
+// Calculate individual piece CFT
+const getPieceCft = (piece) => {
+  const width = Number(piece.width || 0);
+  const height = Number(piece.height || 0);
+  const inch = Number(piece.inch || 0);
+  const count = Number(piece.count || 0);
+
+  return (width * height * inch * count) / 1728;
+};
+
+// Calculate total CFT from pieces
+const getTotalCft = (pieces = []) => {
+  return pieces.reduce(
+    (total, piece) => total + getPieceCft(piece),
+    0
+  );
+};
+
+// Convert CFT to Cubic Meter
+const getCubicMeter = (cft) => cft * 0.0283168;
 
 function CategoryStockSection({
   openingStocks,
@@ -54,15 +76,30 @@ function CategoryStockSection({
           ? nailsMaster
           : consumablesMaster;
 
+      const pieces = record.pieces || [];
+
+      // Calculate overall CFT and Cubic Meter from pieces
+      const totalCft =
+        record.type === "item" &&
+        normalize(getDisplayName(record.category, itemCategories)) === "newitem"
+          ? getTotalCft(pieces)
+          : Number(record.cft || 0);
+
+      const totalCubicMeter =
+        record.type === "item" &&
+        normalize(getDisplayName(record.category, itemCategories)) === "newitem"
+          ? getCubicMeter(totalCft)
+          : Number(record.cubicMeter || 0);
+
       const row = {
         id: record._id || record.id,
         category: getDisplayName(record.category, itemCategories),
         name: getDisplayName(record.referenceId, nameList),
         quantity: record.quantity,
         unit: record.unit || "kg",
-        cft: record.cft,
-        cubicMeter: record.cubicMeter,
-        pieces: record.pieces || [],
+        cft: totalCft,
+        cubicMeter: totalCubicMeter,
+        pieces,
         createdAt: record.createdAt,
       };
 

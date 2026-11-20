@@ -95,6 +95,23 @@ function ChangeRow({ label, oldValue, newValue }) {
 function PieceTable({ pieces = [] }) {
   if (!pieces.length) return <p>No piece details.</p>;
 
+  const getPieceCft = (piece) => {
+    const width = Number(piece.width || 0);
+    const height = Number(piece.height || 0);
+    const inch = Number(piece.inch || 0);
+    const count = Number(piece.count || 0);
+
+    return (width * height * inch * count) / 1728;
+  };
+
+  const getCubicMeter = (cft) => cft * 0.0283168;
+
+  const totalCft = pieces.reduce(
+    (total, piece) => total + getPieceCft(piece),
+    0
+  );
+  const totalCubicMeter = getCubicMeter(totalCft);
+
   return (
     <div className="purchase-table-wrap">
       <table className="purchase-table">
@@ -103,24 +120,38 @@ function PieceTable({ pieces = [] }) {
             <th>#</th>
             <th>Piece Size</th>
             <th>Width</th>
+            <th>Height</th>
             <th>Inch</th>
-            <th>Feet</th>
             <th>Count (pcs)</th>
+            <th>CFT</th>
+            <th>Cubic Meter</th>
           </tr>
         </thead>
         <tbody>
-          {pieces.map((piece, index) => (
-            <tr key={piece._id || index}>
-              <td>{index + 1}</td>
-              <td>
-                {piece.width} x {piece.inch} x {piece.feet}
-              </td>
-              <td>{piece.width}</td>
-              <td>{piece.inch}</td>
-              <td>{piece.feet}</td>
-              <td>{piece.count}</td>
-            </tr>
-          ))}
+          {pieces.map((piece, index) => {
+            const cft = getPieceCft(piece);
+            const cubicMeter = getCubicMeter(cft);
+
+            return (
+              <tr key={piece._id || index}>
+                <td>{index + 1}</td>
+                <td>
+                  {piece.width} x {piece.height} x {piece.inch}
+                </td>
+                <td>{piece.width}</td>
+                <td>{piece.height}</td>
+                <td>{piece.inch}</td>
+                <td>{piece.count}</td>
+                <td>{cft.toFixed(4)}</td>
+                <td>{cubicMeter.toFixed(6)}</td>
+              </tr>
+            );
+          })}
+          <tr>
+            <td colSpan={6}><strong>Total</strong></td>
+            <td><strong>{totalCft.toFixed(4)}</strong></td>
+            <td><strong>{totalCubicMeter.toFixed(6)}</strong></td>
+          </tr>
         </tbody>
       </table>
     </div>

@@ -30,8 +30,8 @@ function PieceSize() {
 
   const [formData, setFormData] = useState({
     width: "",
+    height: "",
     inch: "",
-    feet: "",
   });
 
   // ==========================================
@@ -147,8 +147,8 @@ function PieceSize() {
     // FIX: values can be numbers when editing,
     // so always convert to string before trim()
     const width = String(formData.width).trim();
+    const height = String(formData.height).trim();
     const inch = String(formData.inch).trim();
-    const feet = String(formData.feet).trim();
 
     // ========================================
     // VALIDATION
@@ -163,6 +163,15 @@ function PieceSize() {
       return;
     }
 
+    if (!height) {
+      showToast(
+        "error",
+        "Height Required",
+        "Please enter height."
+      );
+      return;
+    }
+
     if (!inch) {
       showToast(
         "error",
@@ -172,22 +181,13 @@ function PieceSize() {
       return;
     }
 
-    if (!feet) {
-      showToast(
-        "error",
-        "Feet Required",
-        "Please enter feet."
-      );
-      return;
-    }
-
     try {
       setLoading(true);
 
       const payload = {
         width: Number(width),
+        height: Number(height),
         inch: Number(inch),
-        feet: Number(feet),
       };
 
       // ======================================
@@ -242,8 +242,8 @@ function PieceSize() {
       // Reset form
       setFormData({
         width: "",
+        height: "",
         inch: "",
-        feet: "",
       });
 
       setEditingId(null);
@@ -272,8 +272,8 @@ function PieceSize() {
   const handleAddPieceSize = () => {
     setFormData({
       width: "",
+      height: "",
       inch: "",
-      feet: "",
     });
 
     setEditingId(null);
@@ -298,8 +298,8 @@ function PieceSize() {
       // FIX: keep form values as strings
       setFormData({
         width: String(pieceSize.width ?? ""),
+        height: String(pieceSize.height ?? ""),
         inch: String(pieceSize.inch ?? ""),
-        feet: String(pieceSize.feet ?? ""),
       });
 
       setEditingId(pieceSize._id);
@@ -329,7 +329,7 @@ function PieceSize() {
     setDeleteModal({
       show: true,
       id: item._id,
-      name: `${item.width} × ${item.inch} × ${item.feet}`,
+      name: `${item.width} × ${item.height} × ${item.inch}`,
     });
   };
 
@@ -409,8 +409,8 @@ function PieceSize() {
 
     setFormData({
       width: "",
+      height: "",
       inch: "",
-      feet: "",
     });
   };
 
@@ -535,6 +535,24 @@ function PieceSize() {
                     />
                   </div>
 
+                  {/* HEIGHT */}
+
+                  <div className="form-group">
+                    <label>
+                      Height <span>*</span>
+                    </label>
+
+                    <input
+                      type="number"
+                      name="height"
+                      value={formData.height}
+                      onChange={handleChange}
+                      min="0"
+                      step="any"
+                      placeholder="Enter height"
+                    />
+                  </div>
+
                   {/* INCH */}
 
                   <div className="form-group">
@@ -550,24 +568,6 @@ function PieceSize() {
                       min="0"
                       step="any"
                       placeholder="Enter inch"
-                    />
-                  </div>
-
-                  {/* FEET */}
-
-                  <div className="form-group">
-                    <label>
-                      Feet <span>*</span>
-                    </label>
-
-                    <input
-                      type="number"
-                      name="feet"
-                      value={formData.feet}
-                      onChange={handleChange}
-                      min="0"
-                      step="any"
-                      placeholder="Enter feet"
                     />
                   </div>
 
@@ -623,8 +623,8 @@ function PieceSize() {
                   <tr>
                     <th>S.No</th>
                     <th>Width</th>
+                    <th>Height</th>
                     <th>Inch</th>
-                    <th>Feet</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -656,11 +656,11 @@ function PieceSize() {
                         </td>
 
                         <td>
-                          {item.inch}
+                          {item.height}
                         </td>
 
                         <td>
-                          {item.feet}
+                          {item.inch}
                         </td>
 
                         <td>

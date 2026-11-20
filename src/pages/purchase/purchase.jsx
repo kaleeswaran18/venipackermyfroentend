@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -367,6 +367,36 @@ function PaymentDetails({
 }
 
 /* =========================================================
+   PIECE CFT / CUBIC METER CALCULATIONS
+========================================================= */
+
+const CFT_TO_CUBIC_METER = 0.0283168;
+
+const getPieceCft = (piece) => {
+  const width = Number(piece?.width) || 0;
+  const height = Number(piece?.height) || 0;
+  const inch = Number(piece?.inch) || 0;
+  const count = Number(piece?.count) || 0;
+
+  return (width * height * inch * count) / 1728;
+};
+
+const getPieceCubicMeter = (piece) =>
+  getPieceCft(piece) * CFT_TO_CUBIC_METER;
+
+const getPiecesTotals = (pieceList = []) =>
+  pieceList.reduce(
+    (totals, piece) => {
+      const cft = getPieceCft(piece);
+      return {
+        cft: totals.cft + cft,
+        cubicMeter: totals.cubicMeter + cft * CFT_TO_CUBIC_METER,
+      };
+    },
+    { cft: 0, cubicMeter: 0 }
+  );
+
+/* =========================================================
    PAGE
 ========================================================= */
 
@@ -409,6 +439,62 @@ function NewPurchase() {
     handleReset,
     handleSubmit,
   } = usePurchaseForm(id);
+
+  // Synchronize calculated piece totals with the purchase form payload.
+  const syncPieceTotals = (nextPieces) => {
+    const totals = getPiecesTotals(nextPieces);
+    handleChange({
+      target: { name: "cft", value: totals.cft.toFixed(4) },
+    });
+    handleChange({
+      target: { name: "cubicMeter", value: totals.cubicMeter.toFixed(6) },
+    });
+  };
+
+  const onPieceSizeChange = (pieceId, pieceSizeId) => {
+    const selectedSize = pieceSizes.find(
+      (item) => String(item._id) === String(pieceSizeId)
+    );
+    const nextPieces = pieces.map((piece) =>
+      piece.id === pieceId
+        ? {
+            ...piece,
+            pieceSizeId,
+            width: selectedSize ? Number(selectedSize.width) : "",
+            height: selectedSize ? Number(selectedSize.height) : "",
+            inch: selectedSize ? Number(selectedSize.inch) : "",
+          }
+        : piece
+    );
+    handlePieceSizeChange(pieceId, pieceSizeId);
+    syncPieceTotals(nextPieces);
+  };
+
+  const onPieceCountChange = (pieceId, value) => {
+    const nextPieces = pieces.map((piece) =>
+      piece.id === pieceId ? { ...piece, count: value } : piece
+    );
+    handlePieceChange(pieceId, "count", value);
+    syncPieceTotals(nextPieces);
+  };
+
+  const onAddPiece = () => {
+    addPiece();
+    syncPieceTotals(pieces);
+  };
+
+  const onRemovePiece = (pieceId) => {
+    const nextPieces = pieces.filter((piece) => piece.id !== pieceId);
+    removePiece(pieceId);
+    syncPieceTotals(nextPieces);
+  };
+
+  useEffect(() => {
+    if (isNewItem) syncPieceTotals(pieces);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pieces, isNewItem]);
+
+  const pieceTotals = getPiecesTotals(pieces);
 
   return (
     <div className="purchase-layout">
@@ -565,9 +651,11 @@ function NewPurchase() {
                         <input
                           type="number"
                           name="cft"
-                          value={form.cft}
-                          onChange={handleChange}
-                          placeholder="e.g. 10.50"
+                          value={pieceTotals.cft.toFixed(4)}
+                          readOnly
+                          className="readonly"
+                          tabIndex={-1}
+                          placeholder="Auto calculated"
                           min="0"
                           step="any"
                         />
@@ -577,9 +665,11 @@ function NewPurchase() {
                         <input
                           type="number"
                           name="cubicMeter"
-                          value={form.cubicMeter}
-                          onChange={handleChange}
-                          placeholder="e.g. 0.30"
+                          value={pieceTotals.cubicMeter.toFixed(6)}
+                          readOnly
+                          className="readonly"
+                          tabIndex={-1}
+                          placeholder="Auto calculated"
                           min="0"
                           step="any"
                         />
@@ -622,7 +712,7 @@ function NewPurchase() {
                       <button
                         type="button"
                         className="purchase-link-btn"
-                        onClick={addPiece}
+                        onClick={onAddPiece}
                       >
                         <Plus size={15} />
                         Add Piece
@@ -630,29 +720,44 @@ function NewPurchase() {
                     </div>
 
                     <div className="purchase-pieces-table">
-                      <div className="purchase-pieces-row purchase-pieces-labels">
+                      <div
+                        className="purchase-pieces-row purchase-pieces-labels"
+                        style={{
+                          gridTemplateColumns:
+                            "minmax(130px, 1.2fr) repeat(6, minmax(70px, 0.8fr)) 36px",
+                        }}
+                      >
                         <span>Piece Size</span>
                         <span>Width</span>
+                        <span>Height</span>
                         <span>Inch</span>
-                        <span>Feet</span>
                         <span>Count (pcs)</span>
+                        <span>CFT</span>
+                        <span>Cubic Meter</span>
                         <span />
                       </div>
 
                       {pieces.map((piece) => (
-                        <div className="purchase-pieces-row" key={piece.id}>
+                        <div
+                          className="purchase-pieces-row"
+                          key={piece.id}
+                          style={{
+                            gridTemplateColumns:
+                              "minmax(130px, 1.2fr) repeat(6, minmax(70px, 0.8fr)) 36px",
+                          }}
+                        >
                           <select
                             value={piece.pieceSizeId}
                             onChange={(event) =>
-                              handlePieceSizeChange(piece.id, event.target.value)
+                              onPieceSizeChange(piece.id, event.target.value)
                             }
                             required
                           >
                             <option value="">Select Size</option>
                             {pieceSizes.map((pieceSize) => (
                               <option key={pieceSize._id} value={pieceSize._id}>
-                                {pieceSize.width} x {pieceSize.inch} x{" "}
-                                {pieceSize.feet}
+                                {pieceSize.width} x {pieceSize.height} x{" "}
+                                {pieceSize.inch}
                               </option>
                             ))}
                           </select>
@@ -660,6 +765,14 @@ function NewPurchase() {
                           <input
                             type="number"
                             value={piece.width}
+                            readOnly
+                            className="readonly"
+                            tabIndex={-1}
+                          />
+
+                          <input
+                            type="number"
+                            value={piece.height}
                             readOnly
                             className="readonly"
                             tabIndex={-1}
@@ -675,7 +788,17 @@ function NewPurchase() {
 
                           <input
                             type="number"
-                            value={piece.feet}
+                            value={piece.count}
+                            onChange={(event) =>
+                              onPieceCountChange(piece.id, event.target.value)
+                            }
+                            min="0"
+                            step="1"
+                          />
+
+                          <input
+                            type="number"
+                            value={getPieceCft(piece).toFixed(4)}
                             readOnly
                             className="readonly"
                             tabIndex={-1}
@@ -683,17 +806,16 @@ function NewPurchase() {
 
                           <input
                             type="number"
-                            value={piece.count}
-                            onChange={(event) =>
-                              handlePieceChange(piece.id, "count", event.target.value)
-                            }
-                            min="0"
+                            value={getPieceCubicMeter(piece).toFixed(6)}
+                            readOnly
+                            className="readonly"
+                            tabIndex={-1}
                           />
 
                           <button
                             type="button"
                             className="purchase-icon-btn"
-                            onClick={() => removePiece(piece.id)}
+                            onClick={() => onRemovePiece(piece.id)}
                             aria-label="Remove piece"
                           >
                             <Trash2 size={16} />

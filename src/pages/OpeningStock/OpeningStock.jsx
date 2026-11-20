@@ -42,8 +42,8 @@ const EMPTY_PIECE_MODAL = {
   pieceId: null,
   itemName: "",
   width: "",
+  height: "",
   inch: "",
-  feet: "",
   count: "",
 };
 
@@ -67,6 +67,36 @@ const pieceThStyle = {
 const pieceTdStyle = {
   padding: "5px",
   borderBottom: "1px solid #eee",
+};
+
+// Piece dimensions are stored in inches.
+// CFT = (Width × Height × Inch × Count) / 1728.
+const calculatePieceCft = (piece) => {
+  const width = Number(piece?.width) || 0;
+  const height = Number(piece?.height) || 0;
+  const inch = Number(piece?.inch) || 0;
+  const count = Number(piece?.count) || 0;
+
+  return (width * height * inch * count) / 1728;
+};
+
+const calculatePieceCubicMeter = (piece) =>
+  calculatePieceCft(piece) * CFT_TO_CUBIC_METER;
+
+const calculatePiecesTotal = (pieces = []) => {
+  return pieces.reduce(
+    (total, piece) => {
+      const cft = calculatePieceCft(piece);
+
+      return {
+        cft: total.cft + cft,
+        cubicMeter:
+          total.cubicMeter +
+          cft * CFT_TO_CUBIC_METER,
+      };
+    },
+    { cft: 0, cubicMeter: 0 }
+  );
 };
 
 const OpeningStock = () => {
@@ -892,8 +922,8 @@ const OpeningStock = () => {
       pieceId: getPieceId(piece),
       itemName: stock.name,
       width: String(piece.width ?? ""),
+      height: String(piece.height ?? ""),
       inch: String(piece.inch ?? ""),
-      feet: String(piece.feet ?? ""),
       count: String(piece.count ?? ""),
     });
   };
@@ -914,12 +944,8 @@ const OpeningStock = () => {
   const submitPieceEdit = async (event) => {
     event.preventDefault();
 
-    const fields = [
-      ["width", "Width"],
-      ["inch", "Inch"],
-      ["feet", "Feet"],
-      ["count", "Count"],
-    ];
+    // Only Count is editable in the Pieces section.
+    const fields = [["count", "Count"]];
 
     for (const [key, label] of fields) {
       const value = String(pieceModal[key]).trim();
@@ -939,10 +965,8 @@ const OpeningStock = () => {
       }
     }
 
+    // Do not update dimensions from this screen.
     const payload = {
-      width: Number(pieceModal.width),
-      inch: Number(pieceModal.inch),
-      feet: Number(pieceModal.feet),
       count: Number(pieceModal.count),
     };
 
@@ -1002,7 +1026,7 @@ const OpeningStock = () => {
       show: true,
       openingStockId: stock.apiId || stock.id,
       pieceId: getPieceId(piece),
-      label: `${piece.width} × ${piece.inch} × ${piece.feet}`,
+      label: `${piece.width} × ${piece.height} × ${piece.inch}`,
     });
   };
 
@@ -1337,10 +1361,27 @@ const OpeningStock = () => {
                     step="any"
                     name="width"
                     value={pieceModal.width}
-                    onChange={
-                      handlePieceFieldChange
-                    }
+                    readOnly
+                    aria-readonly="true"
                     placeholder="Enter width"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="piece-height">
+                    Height <span>*</span>
+                  </label>
+
+                  <input
+                    id="piece-height"
+                    type="number"
+                    min="0"
+                    step="any"
+                    name="height"
+                    value={pieceModal.height}
+                    readOnly
+                    aria-readonly="true"
+                    placeholder="Enter height"
                   />
                 </div>
 
@@ -1356,29 +1397,9 @@ const OpeningStock = () => {
                     step="any"
                     name="inch"
                     value={pieceModal.inch}
-                    onChange={
-                      handlePieceFieldChange
-                    }
+                    readOnly
+                    aria-readonly="true"
                     placeholder="Enter inch"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="piece-feet">
-                    Feet <span>*</span>
-                  </label>
-
-                  <input
-                    id="piece-feet"
-                    type="number"
-                    min="0"
-                    step="any"
-                    name="feet"
-                    value={pieceModal.feet}
-                    onChange={
-                      handlePieceFieldChange
-                    }
-                    placeholder="Enter feet"
                   />
                 </div>
 
@@ -2030,13 +2051,19 @@ const OpeningStock = () => {
                               "newitem" && (
                               <>
                                 <td>
-                                  {stock.cft ??
-                                    "-"}
+                                  {stock.pieces?.length
+                                    ? calculatePiecesTotal(
+                                        stock.pieces
+                                      ).cft.toFixed(4)
+                                    : "0.0000"}
                                 </td>
 
                                 <td>
-                                  {stock.cubicMeter ??
-                                    "-"}
+                                  {stock.pieces?.length
+                                    ? calculatePiecesTotal(
+                                        stock.pieces
+                                      ).cubicMeter.toFixed(6)
+                                    : "0.000000"}
                                 </td>
 
                                 {/* PIECES */}
@@ -2077,15 +2104,23 @@ const OpeningStock = () => {
                                             </th>
 
                                             <th style={pieceThStyle}>
+                                              Height
+                                            </th>
+
+                                            <th style={pieceThStyle}>
                                               Inch
                                             </th>
 
                                             <th style={pieceThStyle}>
-                                              Feet
+                                              Count
                                             </th>
 
                                             <th style={pieceThStyle}>
-                                              Count
+                                              CFT
+                                            </th>
+
+                                            <th style={pieceThStyle}>
+                                              Cubic Meter
                                             </th>
 
                                             <th style={pieceThStyle}>
@@ -2114,13 +2149,13 @@ const OpeningStock = () => {
 
                                                 <td style={pieceTdStyle}>
                                                   {
-                                                    piece.inch
+                                                    piece.height
                                                   }
                                                 </td>
 
                                                 <td style={pieceTdStyle}>
                                                   {
-                                                    piece.feet
+                                                    piece.inch
                                                   }
                                                 </td>
 
@@ -2133,6 +2168,18 @@ const OpeningStock = () => {
                                                   {
                                                     piece.count
                                                   }
+                                                </td>
+
+                                                <td style={pieceTdStyle}>
+                                                  {calculatePieceCft(
+                                                    piece
+                                                  ).toFixed(4)}
+                                                </td>
+
+                                                <td style={pieceTdStyle}>
+                                                  {calculatePieceCubicMeter(
+                                                    piece
+                                                  ).toFixed(6)}
                                                 </td>
 
                                                 {/* PIECE ACTIONS */}

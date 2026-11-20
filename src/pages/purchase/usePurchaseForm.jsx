@@ -24,7 +24,7 @@ const createPiece = () => ({
   pieceSizeId: "",
   width: "",
   inch: "",
-  feet: "",
+  height: "",
   count: "",
 });
 
@@ -217,8 +217,9 @@ export default function usePurchaseForm(purchaseId) {
               id: `${Date.now()}-${Math.random()}`,
               pieceSizeId: toId(piece.pieceSizeId),
               width: piece.width ?? "",
+              height: piece.height ?? "",
               inch: piece.inch ?? "",
-              feet: piece.feet ?? "",
+              
               count: piece.count ?? "",
             }))
           : [createPiece()]
@@ -369,8 +370,9 @@ export default function usePurchaseForm(purchaseId) {
               ...piece,
               pieceSizeId,
               width: selectedSize?.width ?? "",
+              height: selectedSize?.height ?? "",
+
               inch: selectedSize?.inch ?? "",
-              feet: selectedSize?.feet ?? "",
             }
           : piece
       )
@@ -451,8 +453,9 @@ export default function usePurchaseForm(purchaseId) {
       .map((piece) => ({
         pieceSizeId: piece.pieceSizeId,
         width: Number(piece.width || 0),
+        height: Number(piece.height || 0),
         inch: Number(piece.inch || 0),
-        feet: Number(piece.feet || 0),
+       
         count: Number(piece.count || 0),
       }));
 
